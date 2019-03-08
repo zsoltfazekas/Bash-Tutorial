@@ -1,3 +1,5 @@
 FROM alpine:3.7
-ADD src/addressbook.sh addressbook.sh
-ENTRYPOINT ["bin/ash","addressbook.sh"]
+COPY . /code
+WORKDIR /code/
+RUN touch database/addressbook.db
+RUN chmod +x src/*.sh src/module/*.sh
