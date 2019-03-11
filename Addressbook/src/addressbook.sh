@@ -13,6 +13,21 @@ usage()
     exit 1
 }
 
+delete()
+{
+    delete_user "$@"
+}
+
+search()
+{
+    search_user "$@"
+}
+
+insert()
+{
+    insert_user "$@"
+}
+
 main()
 {
 
@@ -21,15 +36,15 @@ main()
 
     elif [ $1 = delete ]; then
         shift
-        delete_user "$@"
+        delete "$@"
 
     elif [ $1 = search ]; then
         shift
-        search_user "$@"
+        search "$@"
 
     elif [ $1 = insert ]; then
         shift
-        insert_user "$@"
+        insert "$@"
     fi
 
 }

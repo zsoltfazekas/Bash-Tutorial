@@ -6,16 +6,18 @@ db="../database/addressbook.db"
 
 usage_delete() 
 { 
+	echo "---------------------------------------"
 	echo "Delete User"
-	echo "	Usage: [-u <username> ] [-e <email>] [-p <phone>]" 
-	exit 1
+	echo "	Usage: [-u <username> ] [-e <email>] [-p <phone>]"
+	echo "---------------------------------------" 
 }
 
 usage_delete_user()
 {
+	echo "---------------------------------------"
 	echo "You can't delete multiple user at same time or User not found. Try to add different or more complex search criteria"
 	usage_delete
-	exit 1
+	echo "---------------------------------------"
 }
 
 confirm()
@@ -26,15 +28,17 @@ confirm()
 	    case $yn in
 	        [Yy]* ) 
 				coo="sed -i -e \"/${delete}/d\" $db"
-				echo $coo
 				eval $coo
+				echo "---------------------------------------"
 				echo "User deleted"
-				exit 0
+				echo "---------------------------------------"
+				break
 				;;
-	        [Nn]* ) 
-				exit 0
+	        [Nn]* )
+				break
 				;;
-	        * ) echo "Please answer yes or no.";;
+	        * ) echo "Please answer yes or no."
+				;;
 	    esac
 	done
 }
@@ -65,7 +69,7 @@ delete_user()
 
 	if [ $name ] && [ $email ] && [ $phone ]; then
 		delete=`search_user -u $name -e $email -p $phone`
-		found=`search_user -u $name -e $email -p $phone | wc -l`
+		found=`search_user -u $name -e $email -p $phone | wc -l` # count
 		if [ $found -eq 1 ]; then
 			confirm
 		else

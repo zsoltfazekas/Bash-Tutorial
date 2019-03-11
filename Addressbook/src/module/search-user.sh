@@ -3,9 +3,11 @@
 db="../database/addressbook.db"
 
 usage_search() 
-{ 
+{
+	echo "---------------------------------------"
 	echo "Search for User"
-	echo "Usage: [-u <string> ] [-e <string>] [-p <string>]" 
+	echo "Usage: [-u <user> ] [-e <email>] [-p <phone>]" 
+	echo "---------------------------------------"
 	exit 1 
 }
 

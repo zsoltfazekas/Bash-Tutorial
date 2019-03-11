@@ -6,8 +6,10 @@ db="../database/addressbook.db"
 
 usage_insert() 
 {
+	echo "---------------------------------------"
 	echo "Insert User" 
-	echo "Usage: [-u <user> ] [-e <email>] [-p <phone>]" 
+	echo "Usage: [-u <user> ] [-e <email>] [-p <phone>]"
+	echo "---------------------------------------"
 	exit 1 
 }
 
@@ -40,11 +42,15 @@ insert_user()
 	    usage_insert
 	else
 		exist=`search_user -e $email | wc -l`
-		if [ $exist -eq 0 ]; then	
+		if [ $exist -eq 0 ]; then
 			echo "${name}:${email}:${phone}" >> $db 2>&1
+			echo "---------------------------------------"
 			echo "User ${name} inserted!"
+			echo "---------------------------------------"
 		else
+			echo "---------------------------------------"
 			echo "User with email ${email} already exist!"
+			echo "---------------------------------------"
 		fi
 	fi
 }
