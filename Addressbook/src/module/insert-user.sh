@@ -1,7 +1,10 @@
 #!/bin/ash
 
+db="../database/addressbook.db"
+
 usage_insert() 
-{ 
+{
+	echo "Insert User" 
 	echo "Usage: [-u <string> ] [-e <string>] [-p <string>]" 
 	exit 1 
 }
@@ -17,16 +20,12 @@ insert_user()
 	  case "$o" in
 	    u)
 	      name="${OPTARG}"
-	      echo $name
-
 	      ;;
 	    e)
 	      email="${OPTARG}"
-	      echo $email
 	      ;;
 	    p)
 	      phone="${OPTARG}"
-	      echo $phone
 	      ;;
 	    h)
 	      usage_insert
@@ -38,6 +37,7 @@ insert_user()
 	if [ ! $name ] || [ ! $email ] || [ ! $phone ]; then
 	    usage_insert
 	else
-		echo $name $email $phone >> ../database/addressbook.db
+		echo "${name}:${email}:${phone}" >> $db 2>&1
+		echo "User inserted"
 	fi
 }
