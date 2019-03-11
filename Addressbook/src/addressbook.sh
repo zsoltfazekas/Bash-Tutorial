@@ -1,6 +1,7 @@
 #!/bin/ash
 
 . module/insert-user.sh
+. module/search-user.sh
 
 usage() 
 { 
@@ -13,7 +14,6 @@ usage()
 
 main()
 {
-    echo $1
 
     if [ $1 = '-h' ]; then
         usage
@@ -24,7 +24,7 @@ main()
 
     elif [ $1 = search ]; then
         shift
-        echo "SEARCH COMMAND"
+        search_user "$@"
 
     elif [ $1 = insert ]; then
         shift
