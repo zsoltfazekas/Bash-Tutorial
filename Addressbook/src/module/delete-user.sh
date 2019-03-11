@@ -15,7 +15,7 @@ usage_delete()
 usage_delete_user()
 {
 	echo "---------------------------------------"
-	echo "You can't delete multiple user at same time or User not found. Try to add different or more complex search criteria"
+	echo "You can't delete|update multiple user at same time or User not found. Try to add different or more complex search criteria"
 	usage_delete
 	echo "---------------------------------------"
 }
@@ -67,61 +67,22 @@ delete_user()
 	  esac
 	done
 
-	if [ $name ] && [ $email ] && [ $phone ]; then
-		delete=`search_user -u $name -e $email -p $phone`
-		found=`search_user -u $name -e $email -p $phone | wc -l` # count
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
+	comm=""
+	if [ $name ]; then
+		comm="${comm} -u ${name}"
+	fi
+	if [ $email ]; then
+		comm="${comm} -e ${email}"
+	fi
+	if [ $phone ]; then
+		comm="${comm} -p ${phone}"
+	fi
 
-	elif [ $email ] && [ $phone ]; then
-		found=`search_user -e $email -p $phone | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
-
-	elif [ $name ] && [ $phone ]; then
-		found=`search_user -u $name -p $phone | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
-
-	elif [ $name ] && [ $email ]; then
-		found=`search_user -u $name -e $email | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
-
-	elif [ $name ]; then
-		found=`search_user -u $name | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
-
-	elif [ $email ]; then
-		found=`search_user -e $email | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
-
-	elif [ $phone ]; then
-		found=`search_user -p $phone | wc -l`
-		if [ $found -eq 1 ]; then
-			confirm
-		else
-			usage_delete_user
-		fi
+	delete=`search_user $comm`
+	found=`search_user $comm|wc -l` # count
+	if [ $found -eq 1 ]; then
+		confirm
+	else
+		usage_delete_user
 	fi
 }

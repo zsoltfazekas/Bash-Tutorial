@@ -1,8 +1,9 @@
 #!/bin/ash
 
-. module/insert-user.sh
-. module/search-user.sh
-. module/delete-user.sh
+source module/insert-user.sh
+source module/search-user.sh
+source module/delete-user.sh
+source module/edit-user.sh
 
 usage() 
 { 
@@ -28,6 +29,11 @@ insert()
     insert_user "$@"
 }
 
+edit()
+{
+    edit_user "$@"
+}
+
 main()
 {
 
@@ -45,6 +51,10 @@ main()
     elif [ $1 = insert ]; then
         shift
         insert "$@"
+
+     elif [ $1 = edit ]; then
+        shift
+        edit "$@"
     fi
 
 }
