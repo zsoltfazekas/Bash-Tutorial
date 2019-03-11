@@ -2,6 +2,7 @@
 
 . module/insert-user.sh
 . module/search-user.sh
+. module/delete-user.sh
 
 usage() 
 { 
@@ -20,7 +21,7 @@ main()
 
     elif [ $1 = delete ]; then
         shift
-        echo "DELETE COMMAND"
+        delete_user "$@"
 
     elif [ $1 = search ]; then
         shift
