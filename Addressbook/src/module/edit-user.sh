@@ -2,6 +2,7 @@
 
 source module/insert-user.sh
 source module/delete-user.sh
+source module/search-user.sh
 
 usage_edit() 
 { 
@@ -13,10 +14,6 @@ usage_edit()
 
 edit_user()
 {
-	# echo $OPTARG
-	name=
-	email=
-	phone=
 
 	while getopts "u:e:p:h" o; do
 	  case "$o" in
@@ -44,34 +41,40 @@ edit_user()
 
 	comm=""
 	if [ $oldname ]; then
-		comm="$comm -u $oldname"
+		comm="${comm} -u ${oldname}"
+	else
+		oldname=`search_user $comm | cut -d':' -f1`
 	fi
 	if [ $oldemail ]; then
-		comm="$comm -e $oldname"
+		comm="${comm} -e ${oldemail}"
+	else
+		oldemail=`search_user $comm | cut -d':' -f2`
 	fi
 	if [ $oldphone ]; then
-		comm="$comm -p $oldname"
+		comm="${comm} -p ${oldphone}"
+	else
+		oldphone=`search_user $comm | cut -d':' -f3`
+
 	fi
 	delete_user $comm
 
 	comm=""
 	if [ $newname ]; then
-		comm="$comm -u $newname"
+		comm="${comm} -u ${newname}"
 	else
-		comm="$comm -u $oldname"
+		comm="${comm} -u ${oldname}"
 	fi
 
 	if [ $newemail ]; then
-		comm="$comm -e $newemail"
+		comm="${comm} -e ${newemail}"
 	else
-		comm="$comm -e $oldemail"
+		comm="${comm} -e ${oldemail}"
 	fi
 
 	if [ $newphone ]; then
-		comm="$comm -p $newphone"
+		comm="${comm} -p ${newphone}"
 	else
-		comm="$comm -p $oldphone"
+		comm="${comm} -p ${oldphone}"
 	fi
-	insert_user $comm
-
+	insert_user $comm 
 }

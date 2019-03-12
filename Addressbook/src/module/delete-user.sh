@@ -8,7 +8,7 @@ usage_delete()
 { 
 	echo "---------------------------------------"
 	echo "Delete User"
-	echo "	Usage: [-u <username> ] [-e <email>] [-p <phone>]"
+	echo "	Usage: [-u <name> ] [-e <email>] [-p <phone>]"
 	echo "---------------------------------------" 
 }
 
@@ -24,7 +24,7 @@ confirm()
 {
 	while true; 
 	do
-	    read -p "Do you want to delete this user?" yn
+	    read -p "Do you want to delete|update this user?" yn
 	    case $yn in
 	        [Yy]* ) 
 				coo="sed -i -e \"/${delete}/d\" $db"
